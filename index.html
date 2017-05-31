@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+	
+	<script src="js/angular.js">
+        /*
+         Make a Custom Filter for number of duration.
+         */
+	</script>
+	<title>
+        custom filter
+	</title>
+
+	<script type="text/javascript">
+	
+		var myApp = angular.module('myApp', []);
+
+		myApp.controller('myController', function ($scope) {
+			$scope.sessions = 	[{name : 'HTML', duration: 20},
+								{name : 'CSS', duration: 50},
+								{name : 'AngularJs', duration: 60},
+								{name : 'JQuery', duration: 80}]
+		});
+
+		myApp.filter('durationFilter', function(){
+			var filteredDurations = [];
+			return function(items){
+				for(var i = 0; i< items.length; i++){
+					var item = items[i];
+					if(item.duration>50){
+						filteredDurations.push(item);
+					}
+				};
+				return filteredDurations;
+			}
+		})
+		
+	</script>
+
+
+</head>
+
+<body>
+
+<center>
+
+		<div ng-controller="myController">
+
+				<h2> <b> List without duration filter</b> </h2>
+			  <table border="2px">
+			    <tr>
+			      <th>  Name</th>
+			      <th>Duration</th>
+			    </tr>
+			    <tr ng-repeat="session in sessions">
+			      <td>{{session.name}}</td>
+			      <td>{{session.duration}}</td>
+			    </tr>
+			  </table>
+			  
+			  <br>
+
+				<h2> <b> List with filter of duration greater than 50 </b> </h2>
+
+			  <table border="2px">
+			    <tr>
+			      <th>  Name</th>
+			      <th>Duration</th>
+			    </tr>
+			    <tr ng-repeat="session in sessions | durationFilter ">
+			      <td>{{session.name}}</td>
+			      <td>{{session.duration}}</td>
+			    </tr>
+			  </table>
+						
+		</div>
+				
+</center>
+
+
+</body>
+</html>
